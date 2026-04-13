@@ -11,7 +11,7 @@
 
 ## 📊 Rapport complet
 
-👉 **[Voir le rapport interactif](https://fadwa7.github.io/microbiome_cirrhose/)**
+👉 **[Voir le rapport interactif](https://fadwa7.github.io/Microbiome_Cirrhose/)**
 
 ---
 
