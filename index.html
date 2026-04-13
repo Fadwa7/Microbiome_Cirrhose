@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microbiome & Cirrhose Hépatique | Fadwa El Khaddar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #080c14;
+  --bg2:      #0d1220;
+  --bg3:      #111827;
+  --card:     #0f1623;
+  --border:   rgba(255,255,255,0.06);
+  --green:    #34d399;
+  --orange:   #fb923c;
+  --red:      #f87171;
+  --blue:     #60a5fa;
+  --text:     #e2e8f0;
+  --muted:    #64748b;
+  --serif:    'Playfair Display', Georgia, serif;
+  --sans:     'Outfit', sans-serif;
+  --mono:     'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* GRAIN */
+body::after {
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9999;
+  opacity:.025;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+}
+
+/* NAV */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  display: flex; align-items:center; justify-content:space-between;
+  padding: .9rem 4rem;
+  background: rgba(8,12,20,.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-brand { font-family:var(--mono); font-size:.72rem; color:var(--green); letter-spacing:.12em; text-transform:uppercase; }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:.82rem; font-weight:500; transition:color .2s; }
+.nav-links a:hover { color:var(--text); }
+
+/* HERO */
+.hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding: 8rem 4rem 5rem;
+  position:relative; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(52,211,153,.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 80%, rgba(96,165,250,.04) 0%, transparent 60%);
+}
+.grid-lines {
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(52,211,153,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52,211,153,.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+.hero-inner { position:relative; max-width:860px; }
+.tag {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-family:var(--mono); font-size:.68rem; color:var(--green);
+  letter-spacing:.14em; text-transform:uppercase;
+  padding:.35rem .9rem; border-radius:2rem;
+  border:1px solid rgba(52,211,153,.28);
+  background:rgba(52,211,153,.05); margin-bottom:1.75rem;
+}
+.tag-dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+h1 {
+  font-family:var(--serif);
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height:1.12; letter-spacing:-.02em;
+  margin-bottom:1.25rem;
+}
+h1 em { font-style:italic; color:var(--green); }
+.hero-desc { font-size:1.05rem; color:var(--muted); max-width:580px; line-height:1.85; margin-bottom:2.5rem; }
+.meta-row { display:flex; flex-wrap:wrap; gap:2.5rem; }
+.meta-item { display:flex; flex-direction:column; gap:.15rem; }
+.meta-label { font-family:var(--mono); font-size:.6rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; }
+.meta-val { font-size:.88rem; font-weight:500; }
+
+/* SECTIONS */
+.section { padding:6rem 4rem; max-width:1080px; margin:0 auto; }
+.sep { width:100%; height:1px; background:var(--border); }
+
+.sec-label { font-family:var(--mono); font-size:.65rem; color:var(--green); text-transform:uppercase; letter-spacing:.2em; margin-bottom:.6rem; }
+h2 { font-family:var(--serif); font-size:clamp(1.9rem,3vw,2.8rem); line-height:1.2; letter-spacing:-.015em; margin-bottom:1.75rem; }
+h3 { font-family:var(--serif); font-size:1.45rem; margin-bottom:1rem; letter-spacing:-.01em; }
+p  { color:#94a3b8; line-height:1.85; margin-bottom:1rem; }
+
+/* QUESTION */
+.question-box {
+  border-left:3px solid var(--green);
+  background:linear-gradient(135deg,rgba(52,211,153,.04),rgba(96,165,250,.03));
+  border-radius:0 .75rem .75rem 0;
+  padding:1.75rem 2rem; margin:2rem 0;
+}
+.question-box p { font-family:var(--serif); font-size:1.2rem; font-style:italic; color:var(--text); margin:0; line-height:1.7; }
+
+/* STATS */
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1rem; margin:2rem 0; }
+.stat { background:var(--card); border:1px solid var(--border); border-radius:.75rem; padding:1.4rem; text-align:center; transition:border-color .3s,transform .3s; }
+.stat:hover { border-color:rgba(52,211,153,.25); transform:translateY(-2px); }
+.stat-n { font-family:var(--mono); font-size:1.9rem; color:var(--green); display:block; margin-bottom:.2rem; }
+.stat-l { font-size:.7rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+
+/* GROUPS */
+.groups { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin:2rem 0; }
+.group-card { background:var(--card); border:1px solid var(--border); border-radius:.75rem; padding:1.6rem; transition:border-color .3s,transform .3s; }
+.group-card:hover { transform:translateY(-3px); }
+.group-card.g-sain  { border-top:3px solid var(--green); }
+.group-card.g-cirr  { border-top:3px solid var(--orange); }
+.group-card.g-mhe   { border-top:3px solid var(--red); }
+.group-card h4 { font-size:.95rem; font-weight:600; margin-bottom:.6rem; }
+.group-card p { font-size:.82rem; margin:0; }
+.group-n { font-family:var(--mono); font-size:1.4rem; margin-bottom:.4rem; }
+.g-sain .group-n  { color:var(--green); }
+.g-cirr .group-n  { color:var(--orange); }
+.g-mhe  .group-n  { color:var(--red); }
+
+/* PIPELINE */
+.pipeline { display:flex; flex-direction:column; gap:0; margin:2rem 0; }
+.pipe-step { display:grid; grid-template-columns:52px 1fr; gap:1.5rem; position:relative; }
+.pipe-step:not(:last-child)::after {
+  content:''; position:absolute;
+  left:25px; top:52px; width:2px; height:calc(100% - 20px);
+  background:linear-gradient(to bottom,var(--green),transparent); opacity:.25;
+}
+.pipe-num {
+  width:52px; height:52px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--mono); font-size:.75rem; color:var(--green);
+  background:rgba(52,211,153,.08); border:1px solid rgba(52,211,153,.25);
+}
+.pipe-body { padding:.75rem 0 2.75rem; }
+.pipe-body h4 { font-size:.95rem; font-weight:600; color:var(--text); margin-bottom:.35rem; }
+.pipe-body p { font-size:.83rem; margin:0; }
+
+/* CODE */
+.code { background:#0a0f1a; border:1px solid var(--border); border-radius:.5rem; padding:1.1rem 1.4rem; font-family:var(--mono); font-size:.78rem; color:#cdd9e5; overflow-x:auto; margin:.85rem 0; line-height:1.75; }
+.cg { color:#7ee787; } .cb { color:#79c0ff; } .co { color:#ffa657; } .cm { color:#6e7681; }
+
+/* RÉSULTATS */
+.shannon-bars { display:flex; flex-direction:column; gap:.85rem; margin:1.5rem 0; }
+.sh-row { display:flex; align-items:center; gap:1rem; }
+.sh-label { width:160px; font-size:.82rem; flex-shrink:0; }
+.sh-track { flex:1; height:8px; background:rgba(255,255,255,.05); border-radius:4px; overflow:hidden; }
+.sh-fill { height:100%; border-radius:4px; }
+.sh-val { font-family:var(--mono); font-size:.75rem; color:var(--muted); width:44px; text-align:right; }
+
+/* SCORES */
+.scores-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:2rem 0; }
+.score-card { background:var(--card); border:1px solid var(--border); border-radius:.75rem; padding:1.75rem; }
+.score-card h4 { font-family:var(--mono); font-size:.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:.1em; margin-bottom:1.25rem; }
+.big-score { font-family:var(--mono); font-size:2.4rem; color:var(--green); }
+.score-sub { font-size:.78rem; color:var(--muted); margin-top:.3rem; }
+
+/* CONFUSION MATRIX */
+.cm-wrap { overflow-x:auto; margin:1rem 0; }
+table.cm { border-collapse:collapse; font-family:var(--mono); font-size:.82rem; width:100%; }
+table.cm th { padding:.6rem 1rem; font-size:.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; text-align:center; }
+table.cm td { padding:.8rem 1.2rem; text-align:center; border:1px solid var(--border); }
+.cm-hi  { background:rgba(52,211,153,.15); color:var(--green); font-weight:600; }
+.cm-mid { background:rgba(251,146,60,.08); color:var(--orange); }
+.cm-lo  { background:rgba(248,113,113,.05); color:#94a3b8; }
+.cm-lbl { color:var(--muted); font-size:.72rem; }
+
+/* RECALL BADGES */
+.recall-row { display:flex; gap:1rem; flex-wrap:wrap; margin:1rem 0; }
+.recall-badge { font-family:var(--mono); font-size:.75rem; padding:.4rem 1rem; border-radius:.35rem; border:1px solid; }
+.rb-green { border-color:rgba(52,211,153,.35); color:var(--green); background:rgba(52,211,153,.07); }
+.rb-orange { border-color:rgba(251,146,60,.35); color:var(--orange); background:rgba(251,146,60,.07); }
+.rb-red { border-color:rgba(248,113,113,.35); color:var(--red); background:rgba(248,113,113,.07); }
+
+/* SHAP */
+.shap-panels { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin:2rem 0; }
+.shap-panel { background:var(--card); border:1px solid var(--border); border-radius:.75rem; padding:1.5rem; }
+.shap-title { font-family:var(--mono); font-size:.65rem; text-transform:uppercase; letter-spacing:.1em; margin-bottom:1.2rem; padding-bottom:.75rem; border-bottom:1px solid var(--border); }
+.shap-bar-item { margin-bottom:.75rem; }
+.shap-bar-top { display:flex; justify-content:space-between; font-size:.75rem; margin-bottom:.3rem; }
+.shap-bar-top span { font-family:var(--mono); font-size:.65rem; color:var(--muted); }
+.shap-track { height:5px; background:rgba(255,255,255,.04); border-radius:3px; overflow:hidden; }
+.shap-fill  { height:100%; border-radius:3px; }
+
+/* PATHWAY */
+.pathway { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:2.5rem 0; position:relative; }
+.pathway::before {
+  content:''; position:absolute;
+  left:calc(100%/6); right:calc(100%/6); top:52px; height:2px;
+  background:linear-gradient(90deg,var(--green),var(--orange),var(--red)); opacity:.2; z-index:0;
+}
+.path-node { background:var(--card); border:1px solid var(--border); border-radius:.75rem; padding:1.5rem; margin:0 .5rem; position:relative; z-index:1; transition:border-color .3s; }
+.path-node:hover { border-color:rgba(255,255,255,.15); }
+.path-node.pn-sain { border-color:rgba(52,211,153,.3); }
+.path-node.pn-cirr { border-color:rgba(251,146,60,.3); }
+.path-node.pn-mhe  { border-color:rgba(248,113,113,.3); }
+.path-badge { display:inline-block; font-size:.62rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; padding:.2rem .65rem; border-radius:1rem; margin-bottom:.85rem; }
+.pb-green  { background:rgba(52,211,153,.12); color:var(--green); }
+.pb-orange { background:rgba(251,146,60,.12); color:var(--orange); }
+.pb-red    { background:rgba(248,113,113,.12); color:var(--red); }
+.path-node h4 { font-size:.88rem; font-weight:600; margin-bottom:.75rem; }
+.path-node ul { list-style:none; }
+.path-node ul li { font-size:.78rem; color:var(--muted); padding:.18rem 0; display:flex; gap:.4rem; align-items:flex-start; }
+.path-node ul li::before { content:'→'; color:var(--green); font-size:.65rem; margin-top:.15rem; flex-shrink:0; }
+
+/* ACTORS */
+.actors { display:flex; flex-direction:column; gap:1.25rem; margin:2rem 0; }
+.actor { background:var(--card); border:1px solid var(--border); border-radius:.75rem; padding:1.5rem 1.75rem; display:grid; grid-template-columns:48px 1fr; gap:1.25rem; align-items:start; transition:border-color .3s; }
+.actor:hover { border-color:rgba(255,255,255,.12); }
+.actor-icon { font-size:1.6rem; }
+.actor h4 { font-size:.95rem; font-weight:600; margin-bottom:.4rem; }
+.actor p { font-size:.83rem; margin:0; }
+
+/* DISCUSSION */
+.disc-items { display:flex; flex-direction:column; gap:1rem; margin:1.5rem 0; }
+.disc-item { display:grid; grid-template-columns:28px 1fr; gap:1rem; align-items:start; }
+.disc-dot { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.7rem; flex-shrink:0; margin-top:.1rem; }
+.dd-green  { background:rgba(52,211,153,.12); color:var(--green); }
+.dd-orange { background:rgba(251,146,60,.12); color:var(--orange); }
+.dd-red    { background:rgba(248,113,113,.12); color:var(--red); }
+.dd-blue   { background:rgba(96,165,250,.12); color:var(--blue); }
+.disc-text { font-size:.88rem; color:#94a3b8; line-height:1.75; }
+.disc-text strong { color:var(--text); }
+
+/* REFS */
+.refs { display:flex; flex-direction:column; gap:.85rem; margin:1.5rem 0; }
+.ref-item { background:var(--card); border:1px solid var(--border); border-radius:.5rem; padding:1rem 1.25rem; font-size:.82rem; color:var(--muted); }
+.ref-item strong { color:var(--text); display:block; margin-bottom:.2rem; }
+.ref-item a { color:var(--green); text-decoration:none; font-family:var(--mono); font-size:.72rem; }
+
+/* FOOTER */
+footer { border-top:1px solid var(--border); padding:2.5rem 4rem; text-align:center; }
+footer p { font-size:.78rem; color:var(--muted); margin:0; }
+footer a { color:var(--green); text-decoration:none; }
+
+/* FADE-IN */
+.fi { opacity:0; transform:translateY(22px); transition:opacity .65s ease,transform .65s ease; }
+.fi.visible { opacity:1; transform:none; }
+
+/* RESPONSIVE */
+@media(max-width:780px){
+  nav { padding:.8rem 1.5rem; }
+  .nav-links { display:none; }
+  .hero,.section { padding-left:1.5rem; padding-right:1.5rem; }
+  .groups,.shap-panels,.pathway,.scores-grid { grid-template-columns:1fr; }
+  .path-node { margin:.5rem 0; }
+  .pathway::before { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Microbiome × ML - F. El Khaddar</div>
+  <ul class="nav-links">
+    <li><a href="#contexte">Contexte</a></li>
+    <li><a href="#methodes">Méthodes</a></li>
+    <li><a href="#resultats">Résultats</a></li>
+    <li><a href="#biologie">Biologie</a></li>
+    <li><a href="#discussion">Discussion</a></li>
+    <li><a href="#refs">Références</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="grid-lines"></div>
+  <div class="hero-inner fi">
+    <div class="tag"><div class="tag-dot"></div>Bioinformatique · Microbiome · Machine Learning</div>
+    <h1>Le microbiome intestinal comme <em>miroir</em><br>de la progression hépatique</h1>
+    <p class="hero-desc">Identification de biomarqueurs bactériens spécifiques à chaque stade de la maladie hépatique - santé, cirrhose et encéphalopathie minimale - par apprentissage automatique et analyse SHAP.</p>
+    <div class="meta-row">
+      <div class="meta-item"><span class="meta-label">Auteur</span><span class="meta-val">Fadwa El Khaddar</span></div>
+      <div class="meta-item"><span class="meta-label">Dataset</span><span class="meta-val">MicrobiomeHD · Zhang et al. 2013</span></div>
+      <div class="meta-item"><span class="meta-label">Technologie</span><span class="meta-val">16S rRNA · LS454</span></div>
+      <div class="meta-item"><span class="meta-label">Algorithme</span><span class="meta-val">Random Forest + SHAP</span></div>
+      <div class="meta-item"><span class="meta-label">Environnement</span><span class="meta-val">Python 3.10 · scikit-learn</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════ CONTEXTE ═══════════════════════ -->
+<section id="contexte" class="section">
+  <div class="fi">
+    <div class="sec-label">01 - Contexte</div>
+    <h2>L'axe intestin-foie : un dialogue microbien</h2>
+
+    <div class="question-box">
+      <p>La composition du microbiome intestinal reflète-t-elle la progression de la maladie hépatique, et quelles bactéries sont les biomarqueurs de chaque stade - santé, cirrhose, et encéphalopathie hépatique minimale ?</p>
+    </div>
+
+    <p>Le foie reçoit 70% de son apport sanguin via la <strong style="color:var(--text)">veine porte</strong>, qui draine directement l'intestin. Toute dysbiose intestinale se traduit par une translocation de métabolites bactériens vers le foie, amplifiant l'inflammation et accélérant la fibrose hépatique - c'est le principe de l'<strong style="color:var(--text)">axe intestin-foie</strong>.</p>
+
+    <p>L'<strong style="color:var(--text)">encéphalopathie hépatique minimale (MHE)</strong> représente le stade avancé étudié ici. Lorsque le foie ne filtre plus correctement le sang portal, l'ammoniaque produit par certaines bactéries intestinales atteint le cerveau et provoque des complications neurologiques progressives.</p>
+
+    <div class="stats">
+      <div class="stat"><span class="stat-n">77</span><span class="stat-l">Patients total</span></div>
+      <div class="stat"><span class="stat-n">3</span><span class="stat-l">Groupes cliniques</span></div>
+      <div class="stat"><span class="stat-n">3 104</span><span class="stat-l">OTUs bruts</span></div>
+      <div class="stat"><span class="stat-n">199</span><span class="stat-l">OTUs filtrés</span></div>
+      <div class="stat"><span class="stat-n">16S</span><span class="stat-l">rRNA · LS454</span></div>
+    </div>
+
+    <div class="groups">
+      <div class="group-card g-sain">
+        <div class="group-n">26</div>
+        <h4>🟢 Sain (H)</h4>
+        <p>Microbiome de référence. Producteurs de butyrate dominants, barrière intestinale intacte, aucune translocation bactérienne vers le foie.</p>
+      </div>
+      <div class="group-card g-cirr">
+        <div class="group-n">25</div>
+        <h4>🟠 Cirrhose (CIRR)</h4>
+        <p>Dysbiose installée. Invasion de l'intestin par des bactéries d'origine buccale via la veine porte fragilisée. Barrière muqueuse altérée.</p>
+      </div>
+      <div class="group-card g-mhe">
+        <div class="group-n">26</div>
+        <h4>🔴 Encéphalopathie (MHE)</h4>
+        <p>Stade avancé. Effondrement des bactéries protectrices, production d'ammoniaque amplifiée, complications neurologiques.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════ MÉTHODES ═══════════════════════ -->
+<section id="methodes" class="section">
+  <div class="fi">
+    <div class="sec-label">02 - Méthodes</div>
+    <h2>Pipeline bioinformatique</h2>
+
+    <p>L'ensemble de l'analyse est réalisé en Python 3.10 dans un environnement conda dédié. Le dataset est téléchargé automatiquement depuis Zenodo (MIT · MicrobiomeHD). Chaque étape est motivée biologiquement avant d'être implémentée.</p>
+
+    <div class="pipeline">
+
+      <div class="pipe-step">
+        <div class="pipe-num">01</div>
+        <div class="pipe-body">
+          <h4>Acquisition des données</h4>
+          <p>Téléchargement depuis MicrobiomeHD (Zenodo, MIT). Dataset Zhang et al. 2013 - séquençage 16S rRNA LS454. Table OTU RDP-assignée (3 104 OTUs × 77 patients) + métadonnées cliniques (colonne DiseaseState : H / CIRR / MHE).</p>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">02</div>
+        <div class="pipe-body">
+          <h4>Normalisation en abondances relatives</h4>
+          <p>Les données microbiome sont compositionnelles - on ne peut comparer que des proportions, pas des counts bruts. Chaque patient est normalisé pour que la somme de ses abondances soit égale à 1.0.</p>
+          <div class="code">X_relative = X_raw.div(X_raw.sum(axis=<span class="co">1</span>), axis=<span class="co">0</span>)
+<span class="cm"># Vérification : somme ligne 1 = 1.0000 ✓</span></div>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">03</div>
+        <div class="pipe-body">
+          <h4>Filtrage des OTUs rares - seuil 10%</h4>
+          <p>Un OTU présent chez moins de 10% des patients (moins de 8 patients sur 77) n'apporte que du bruit statistique. Ce filtrage réduit la dimensionnalité de 3 104 à 199 OTUs biologiquement pertinents.</p>
+          <div class="code">prevalence = (X_relative > <span class="co">0</span>).sum(axis=<span class="co">0</span>) / X_relative.shape[<span class="co">0</span>]
+X_filtered = X_relative[prevalence >= <span class="co">0.10</span>]
+<span class="cm"># 3 104 → 199 OTUs conservés (94% de réduction)</span></div>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">04</div>
+        <div class="pipe-body">
+          <h4>Diversité alpha - Indice de Shannon</h4>
+          <p>Mesure la richesse et l'équitabilité du microbiome par patient. Formule : H = −Σ(pᵢ × log pᵢ). Un microbiome sain est plus diversifié - on attend une diminution progressive vers la MHE.</p>
+          <div class="code"><span class="cg">def</span> <span class="cb">shannon</span>(row):
+    row = row[row > <span class="co">0</span>]  <span class="cm"># exclure les absents (log(0) = -∞)</span>
+    <span class="cg">return</span> -np.sum(row * np.log(row))</div>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">05</div>
+        <div class="pipe-body">
+          <h4>Diversité beta - PCA</h4>
+          <p>Projection des 77 patients depuis l'espace à 199 dimensions vers 2 axes principaux. Permet de visualiser si les groupes se séparent dans l'espace compositionnel global. Précédée d'une standardisation pour mettre toutes les bactéries à la même échelle.</p>
+          <div class="code">scaler  = StandardScaler()
+X_scaled = scaler.fit_transform(X_filtered)
+pca     = PCA(n_components=<span class="co">2</span>, random_state=<span class="co">42</span>)
+X_pca   = pca.fit_transform(X_scaled)</div>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">06</div>
+        <div class="pipe-body">
+          <h4>Classification - Random Forest multiclasse</h4>
+          <p>500 arbres de décision indépendants votent pour CIRR / H / MHE. Chaque arbre est entraîné sur un sous-échantillon aléatoire des données (bagging) et utilise un sous-ensemble aléatoire d'OTUs à chaque nœud. La cross-validation stratifiée à 5 folds évalue honnêtement la performance avec n=77.</p>
+          <div class="code">rf = RandomForestClassifier(
+    n_estimators  = <span class="co">500</span>,
+    class_weight  = <span class="cb">"balanced"</span>,
+    random_state  = <span class="co">42</span>
+)
+cv = StratifiedKFold(n_splits=<span class="co">5</span>, shuffle=<span class="cg">True</span>, random_state=<span class="co">42</span>)</div>
+        </div>
+      </div>
+
+      <div class="pipe-step">
+        <div class="pipe-num">07</div>
+        <div class="pipe-body">
+          <h4>Interprétabilité - SHAP (Shapley Values)</h4>
+          <p>La valeur de Shapley, issue de la théorie des jeux coopératifs, quantifie la contribution marginale de chaque bactérie à chaque prédiction en testant toutes les coalitions possibles de variables. TreeExplainer calcule ces valeurs exactes en exploitant la structure des arbres.</p>
+          <div class="code">explainer   = shap.TreeExplainer(rf_final)
+shap_values = explainer.shap_values(X_filtered)
+<span class="cm"># shape : (77 patients, 199 OTUs, 3 classes)</span>
+shap_global = np.abs(shap_values).mean(axis=<span class="co">0</span>).mean(axis=<span class="co">1</span>)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════ RÉSULTATS ═══════════════════════ -->
+<section id="resultats" class="section">
+  <div class="fi">
+    <div class="sec-label">03 - Résultats</div>
+    <h2>Performance du modèle et biomarqueurs</h2>
+
+    <!-- SHANNON -->
+    <h3>3.1 - Diversité alpha · Indice de Shannon</h3>
+    <p>La tendance attendue est observée - Shannon diminue progressivement de Sain vers MHE - mais les différences sont trop faibles pour atteindre la significativité statistique (Kruskal-Wallis p = 0.70). Ce résultat, cohérent avec la taille réduite du dataset (n=77), démontre que la diversité alpha seule est insuffisante pour discriminer les stades cliniques et justifie l'approche ML multivariée.</p>
+
+    <div class="shannon-bars">
+      <div class="sh-row">
+        <div class="sh-label" style="color:var(--green)">🟢 Sain (H)</div>
+        <div class="sh-track"><div class="sh-fill" style="width:86.7%;background:var(--green)"></div></div>
+        <div class="sh-val">1.734</div>
+      </div>
+      <div class="sh-row">
+        <div class="sh-label" style="color:var(--orange)">🟠 Cirrhose (CIRR)</div>
+        <div class="sh-track"><div class="sh-fill" style="width:82%;background:var(--orange)"></div></div>
+        <div class="sh-val">1.641</div>
+      </div>
+      <div class="sh-row">
+        <div class="sh-label" style="color:var(--red)">🔴 MHE</div>
+        <div class="sh-track"><div class="sh-fill" style="width:80%;background:var(--red)"></div></div>
+        <div class="sh-val">1.601</div>
+      </div>
+    </div>
+    <p style="font-size:.8rem">Kruskal-Wallis p = 0.70 · Mann-Whitney H vs CIRR p = 0.41 · CIRR vs MHE p = 0.60 · H vs MHE p = 0.78</p>
+
+    <!-- PCA -->
+    <h3 style="margin-top:2.5rem">3.2 - Diversité beta · PCA</h3>
+    <p>PC1 = 4.8% · PC2 = 4.4% - ensemble 9.2% de la variance totale expliquée. Le chevauchement fort des 3 groupes en 2D reflète la haute dimensionnalité des données microbiome et la variabilité inter-individuelle qui domine souvent le signal maladie. Ce résultat valide la nécessité d'un algorithme capable de travailler dans les 199 dimensions simultanément.</p>
+
+    <!-- RF -->
+    <h3 style="margin-top:2.5rem">3.3 - Classification · Random Forest multiclasse</h3>
+
+    <div class="scores-grid">
+      <div class="score-card">
+        <h4>Métriques globales · 5-fold stratifié</h4>
+        <div class="big-score">0.644</div>
+        <div class="score-sub">Balanced Accuracy ± 0.164</div>
+        <br>
+        <div class="big-score" style="font-size:1.6rem;color:var(--blue)">0.623</div>
+        <div class="score-sub">F1-score macro ± 0.189</div>
+        <br>
+        <p style="font-size:.78rem;margin-top:.5rem">Performance ~2× supérieure au hasard (33% pour 3 classes équiprobables). La variance inter-folds [0.40–0.87] reflète la taille limitée du dataset.</p>
+      </div>
+
+      <div class="score-card">
+        <h4>Matrice de confusion · cross_val_predict</h4>
+        <div class="cm-wrap">
+          <table class="cm">
+            <tr><th></th><th>Prédit CIRR</th><th>Prédit H</th><th>Prédit MHE</th></tr>
+            <tr><td class="cm-lbl">Réel CIRR</td><td class="cm-mid">11</td><td class="cm-lo">6</td><td class="cm-lo">8</td></tr>
+            <tr><td class="cm-lbl">Réel H</td><td class="cm-lo">3</td><td class="cm-hi">18</td><td class="cm-lo">5</td></tr>
+            <tr><td class="cm-lbl">Réel MHE</td><td class="cm-lo">3</td><td class="cm-lo">2</td><td class="cm-hi">21</td></tr>
+          </table>
+        </div>
+        <div class="recall-row" style="margin-top:1rem">
+          <span class="recall-badge rb-red">CIRR recall = 0.44</span>
+          <span class="recall-badge rb-orange">H recall = 0.69</span>
+          <span class="recall-badge rb-green">MHE recall = 0.81</span>
+        </div>
+      </div>
+    </div>
+
+    <p>La MHE est le stade le mieux prédit (recall = 0.81) - sa dysbiose est la plus prononcée biologiquement. La cirrhose est la plus difficile à prédire (recall = 0.44) car c'est un stade intermédiaire dont le microbiome oscille entre profil sain (cirrhose compensée) et profil MHE (cirrhose décompensée), reflétant fidèlement la réalité clinique.</p>
+
+    <!-- SHAP -->
+    <h3 style="margin-top:2.5rem">3.4 - Biomarqueurs SHAP · par stade clinique</h3>
+    <p>Les valeurs SHAP décomposent la contribution de chaque bactérie à chaque prédiction. Une valeur élevée signifie que cette bactérie a fortement influencé la classification - dans un sens ou dans l'autre.</p>
+
+    <div class="shap-panels">
+
+      <div class="shap-panel">
+        <div class="shap-title" style="color:var(--orange)">🟠 Cirrhose - biomarqueurs</div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Veillonella <span>0.033</span></div><div class="shap-track"><div class="shap-fill" style="width:100%;background:var(--orange)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Bacteroides <span>0.016</span></div><div class="shap-track"><div class="shap-fill" style="width:48%;background:var(--orange)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Lachnospiracea <span>0.011</span></div><div class="shap-track"><div class="shap-fill" style="width:33%;background:var(--orange)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Erysipelotrichaceae <span>0.010</span></div><div class="shap-track"><div class="shap-fill" style="width:30%;background:var(--orange)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Roseburia <span>0.009</span></div><div class="shap-track"><div class="shap-fill" style="width:27%;background:var(--orange)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Alistipes <span>0.009</span></div><div class="shap-track"><div class="shap-fill" style="width:27%;background:var(--orange)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Faecalibacterium <span>0.008</span></div><div class="shap-track"><div class="shap-fill" style="width:24%;background:var(--orange)"></div></div></div>
+      </div>
+
+      <div class="shap-panel">
+        <div class="shap-title" style="color:var(--green)">🟢 Sain - biomarqueurs</div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Lachnospiracea <span>0.032</span></div><div class="shap-track"><div class="shap-fill" style="width:100%;background:var(--green)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Veillonella <span>0.022</span></div><div class="shap-track"><div class="shap-fill" style="width:69%;background:var(--green)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Roseburia <span>0.021</span></div><div class="shap-track"><div class="shap-fill" style="width:66%;background:var(--green)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Bacteroides <span>0.020</span></div><div class="shap-track"><div class="shap-fill" style="width:63%;background:var(--green)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Faecalibacterium <span>0.020</span></div><div class="shap-track"><div class="shap-fill" style="width:63%;background:var(--green)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Enterobacteriaceae <span>0.011</span></div><div class="shap-track"><div class="shap-fill" style="width:34%;background:var(--green)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Lachnospiraceae <span>0.010</span></div><div class="shap-track"><div class="shap-fill" style="width:31%;background:var(--green)"></div></div></div>
+      </div>
+
+      <div class="shap-panel">
+        <div class="shap-title" style="color:var(--red)">🔴 MHE - biomarqueurs</div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Lachnospiracea <span>0.021</span></div><div class="shap-track"><div class="shap-fill" style="width:100%;background:var(--red)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Bacteroides <span>0.015</span></div><div class="shap-track"><div class="shap-fill" style="width:71%;background:var(--red)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Roseburia <span>0.013</span></div><div class="shap-track"><div class="shap-fill" style="width:62%;background:var(--red)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Faecalibacterium ×3 <span>0.013</span></div><div class="shap-track"><div class="shap-fill" style="width:62%;background:var(--red)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Veillonella <span>0.011</span></div><div class="shap-track"><div class="shap-fill" style="width:52%;background:var(--red)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Lachnospiraceae <span>0.010</span></div><div class="shap-track"><div class="shap-fill" style="width:48%;background:var(--red)"></div></div></div>
+        <div class="shap-bar-item"><div class="shap-bar-top">Bacteroides <span>0.010</span></div><div class="shap-track"><div class="shap-fill" style="width:48%;background:var(--red)"></div></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════ BIOLOGIE ═══════════════════════ -->
+<section id="biologie" class="section">
+  <div class="fi">
+    <div class="sec-label">04 - Interprétation biologique</div>
+    <h2>La dysbiose comme reflet de la progression hépatique</h2>
+
+    <p>Les biomarqueurs identifiés par SHAP sont en cohérence remarquable avec la physiopathologie connue de l'axe intestin-foie. Le modèle a capturé, sans connaissance a priori de la biologie, les mêmes acteurs bactériens décrits dans la littérature par Qin et al. 2014 (<em>Nature</em>).</p>
+
+    <div class="pathway">
+      <div class="path-node pn-sain">
+        <div class="path-badge pb-green">Sain</div>
+        <h4>Microbiome protecteur</h4>
+        <ul>
+          <li>↑ Lachnospiracea abondant</li>
+          <li>↑ Roseburia abondante</li>
+          <li>↑ Faecalibacterium élevé</li>
+          <li>Butyrate abondant</li>
+          <li>Barrière intestinale intacte</li>
+          <li>Aucune translocation</li>
+        </ul>
+      </div>
+      <div class="path-node pn-cirr">
+        <div class="path-badge pb-orange">Cirrhose</div>
+        <h4>Dysbiose installée</h4>
+        <ul>
+          <li>↑↑ Veillonella buccale</li>
+          <li>↓ Lachnospiracea</li>
+          <li>↓ Roseburia</li>
+          <li>Moins de butyrate</li>
+          <li>Barrière fragilisée</li>
+          <li>Translocation bactérienne</li>
+        </ul>
+      </div>
+      <div class="path-node pn-mhe">
+        <div class="path-badge pb-red">MHE</div>
+        <h4>Effondrement microbien</h4>
+        <ul>
+          <li>↑↑↑ Veillonella</li>
+          <li>↓↓ Faecalibacterium (×3 SHAP)</li>
+          <li>Effondrement butyrate</li>
+          <li>↑ Ammoniaque sanguin</li>
+          <li>Encéphalopathie</li>
+          <li>Complications neurologiques</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2.5rem">Acteurs biologiques clés</h3>
+
+    <div class="actors">
+      <div class="actor">
+        <div class="actor-icon">🦠</div>
+        <div>
+          <h4>Veillonella - l'envahisseur buccal</h4>
+          <p>Bactérie d'origine orale, normalement absente de l'intestin. Sa présence dominante dans la cirrhose (SHAP = 0.033, rang 1) confirme l'invasion oro-intestinale décrite par Qin et al. 2014 - 54% des espèces enrichies dans la cirrhose sont d'origine buccale. Elle produit du propionate et des lipopolysaccharides (LPS) qui activent les récepteurs toll-like du foie et amplifient la cascade inflammatoire hépatique.</p>
+        </div>
+      </div>
+      <div class="actor">
+        <div class="actor-icon">🛡️</div>
+        <div>
+          <h4>Faecalibacterium prausnitzii - le gardien du butyrate</h4>
+          <p>Principal producteur de butyrate anti-inflammatoire du microbiome intestinal. Son effondrement progressif est capturé par SHAP avec une force remarquable - il apparaît 3 fois dans le top 10 SHAP de la MHE, signal le plus fort de progression vers l'encéphalopathie. Sans butyrate, les cellules épithéliales du côlon manquent d'énergie, la barrière intestinale devient perméable aux toxines bactériennes, et les LPS transitent librement vers le foie via la veine porte.</p>
+        </div>
+      </div>
+      <div class="actor">
+        <div class="actor-icon">⚗️</div>
+        <div>
+          <h4>Roseburia & Lachnospiracea - la brigade butyrate</h4>
+          <p>Producteurs majeurs d'acides gras à chaîne courte (AGCC) dans l'intestin. Leur diminution progressive de sain → cirrhose → MHE amplifie la perte d'intégrité de la barrière muqueuse. Leur présence élevée chez les sains (SHAP = 0.032 et 0.021) et leur chute dans la MHE forment un gradient biologique cohérent avec l'axe intestin-foie.</p>
+        </div>
+      </div>
+      <div class="actor">
+        <div class="actor-icon">🔬</div>
+        <div>
+          <h4>Bacteroides - le marqueur ambigu</h4>
+          <p>Bacteroides est présent dans tous les groupes mais avec des proportions différentes selon le stade. Plusieurs OTUs de Bacteroides apparaissent dans les top SHAP des 3 classes simultanément - certains enrichis dans la maladie, d'autres appauvris. Le modèle détecte ces réarrangements compositionnels subtils qui reflètent le changement d'équilibre écologique du microbiome au cours de la progression hépatique.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════ DISCUSSION ═══════════════════════ -->
+<section id="discussion" class="section">
+  <div class="fi">
+    <div class="sec-label">05 - Discussion</div>
+    <h2>Points clés et limites</h2>
+
+    <div class="disc-items">
+      <div class="disc-item">
+        <div class="disc-dot dd-green">✓</div>
+        <div class="disc-text"><strong>Cohérence biologique validée.</strong> Les biomarqueurs identifiés par SHAP correspondent exactement aux bactéries décrites dans la littérature sur l'axe intestin-foie. Le modèle a capturé sans supervision la même biologie que Qin et al. 2014 - c'est la validation la plus forte qu'on puisse obtenir.</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-dot dd-green">✓</div>
+        <div class="disc-text"><strong>Performance ML robuste sur petit dataset.</strong> Une balanced accuracy de 0.644 sur 77 patients avec 3 classes est compétitive avec la littérature. La MHE est le stade le mieux prédit (recall = 0.81), ce qui est biologiquement cohérent - sa dysbiose est la plus prononcée.</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-dot dd-orange">△</div>
+        <div class="disc-text"><strong>La cirrhose est biologiquement floue.</strong> Le recall de 0.44 pour la cirrhose n'est pas un échec du modèle - c'est une réalité clinique. La cirrhose est un continuum entre compensation et décompensation. Certains patients cirrhotiques ont un microbiome encore proche des sains, d'autres ont déjà basculé vers un profil MHE.</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-dot dd-orange">△</div>
+        <div class="disc-text"><strong>Taille du dataset limitante.</strong> 77 patients est insuffisant pour tirer des conclusions cliniques définitives. La variance inter-folds élevée (0.40–0.87) en est le reflet direct. Un dataset de 300–500 patients permettrait de confirmer ces biomarqueurs avec une puissance statistique suffisante.</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-dot dd-red">!</div>
+        <div class="disc-text"><strong>Causalité vs corrélation.</strong> Le modèle identifie des associations entre microbiome et stade clinique - pas des relations causales. La dysbiose observée peut être une cause, une conséquence, ou les deux simultanément. Des études longitudinales avec prélèvements avant et après la progression seraient nécessaires pour démêler cette relation.</div>
+      </div>
+      <div class="disc-item">
+        <div class="disc-dot dd-blue">→</div>
+        <div class="disc-text"><strong>Perspectives.</strong> L'intégration de données métabolomiques (acides biliaires, AGCC, ammoniaque sanguin) via une approche multi-omique permettrait d'enrichir ce modèle et de relier directement les biomarqueurs bactériens à leurs effets métaboliques mesurables sur la fonction hépatique.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
+<!-- ═══════════════════════ RÉFÉRENCES ═══════════════════════ -->
+<section id="refs" class="section">
+  <div class="fi">
+    <div class="sec-label">06 - Références</div>
+    <h2>Sources scientifiques</h2>
+
+    <div class="refs">
+      <div class="ref-item">
+        <strong>Zhang et al. 2013 - Dataset source</strong>
+        Gut microbiota dysbiosis in severe hepatitis B and chronic hepatitis B. <em>American Journal of Gastroenterology.</em>
+        <br><a href="https://doi.org/10.1038/ajg.2013.221">DOI: 10.1038/ajg.2013.221</a>
+      </div>
+      <div class="ref-item">
+        <strong>Qin et al. 2014 - Référence biologique principale</strong>
+        Alterations of the human gut microbiome in liver cirrhosis. <em>Nature</em>, 513, 59–64.
+        <br><a href="https://doi.org/10.1038/nature13568">DOI: 10.1038/nature13568</a>
+      </div>
+      <div class="ref-item">
+        <strong>Duvallet et al. 2017 - MicrobiomeHD</strong>
+        Meta-analysis of gut microbiome studies identifies shared and disease-specific patterns. <em>Nature Communications.</em>
+        <br><a href="https://zenodo.org/records/569601">Zenodo: 10.5281/zenodo.569601</a>
+      </div>
+      <div class="ref-item">
+        <strong>Lundberg & Lee 2017 - SHAP</strong>
+        A unified approach to interpreting model predictions. <em>NeurIPS 2017.</em>
+        <br><a href="https://arxiv.org/abs/1705.07874">arXiv: 1705.07874</a>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem;padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:.75rem;">
+      <p style="font-size:.82rem;margin:0;color:var(--muted)">
+        🔗 Voir aussi :
+        <a href="https://fadwa7.github.io/TCGA_COAD_multiomics/" style="color:var(--green);text-decoration:none;margin-left:.5rem">TCGA-COAD Multiomics MOFA+ →</a>
+        <span style="color:var(--border);margin:0 .75rem">|</span>
+        Analyse multi-omique intégrative du cancer colorectal (RNA-seq · méthylation · mutations · MOFA+)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Fadwa El Khaddar - Ingénieure Bioinformatique · <a href="https://fadwa7.github.io/TCGA_COAD_multiomics/">Portfolio</a> · Dataset : <a href="https://zenodo.org/records/569601">MicrobiomeHD · Zenodo · MIT</a></p>
+</footer>
+
+<script>
+// Fade-in on scroll
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+// Hero fade-in on load
+setTimeout(() => {
+  document.querySelector('.hero .fi')?.classList.add('visible');
+}, 100);
+</script>
+</body>
+</html>
